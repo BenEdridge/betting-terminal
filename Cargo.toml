@@ -1,5 +1,5 @@
 [package]
-name = "init"
+name = "betting"
 version = "0.1.0"
 authors = ["Ben Edridge <BenEdridge@users.noreply.github.com>"]
 edition = "2018"
