@@ -1,3 +1,3 @@
-// const BET_TYPE: 
 pub mod bet;
-pub mod race;
+pub mod event;
+pub mod pool;

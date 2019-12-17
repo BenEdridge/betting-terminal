@@ -1,44 +1,31 @@
 use std::error::Error;
 use std::io;
-use rand::Rng;
 
 mod engine;
 use engine::ticker;
 
-pub struct Config {
-  pub console_size: String,
-  pub start_server: String,
-}
-
-impl Config {
-  pub fn new(args: &[String]) -> Result<Config, &'static str> {
-
-      let console_size = args[1].clone();
-      let start_server = args[2].clone();
-
-      Ok(Config { console_size, start_server })
-  }
-}
-
 pub fn run() -> Result<(), Box<dyn Error>> {
-  // print!("\x1B[2J");
-  // print!("\x1B[K");
-  println!("{}","\x1B[7;49;39m Running betting terminal: 🐎 1, 🐕 2");
+  println!("{}","\x1B[7;49;39m Running betting terminal: 🐎 1, 🐕 2, Mixed 3");
+  
   println!("{}", "Choose a game number");
   let mut game_input = String::new();
-
-  io::stdin().read_line(&mut game_input)
-    .expect("Failed to read line");
-
+  io::stdin().read_line(&mut game_input).expect("Failed to read line");
   println!("Running game: {}", game_input);
-  let winner = rand::thread_rng().gen_range(1,8);
 
-  println!("{}", "Choose a winner number");
-  let mut winner_input = String::new();
-  io::stdin().read_line(&mut winner_input)
-    .expect("Failed to read line");
+  println!("{}", "Selections in format from top to bottom: <1,2,3,4,5...>");
+  let mut selections = String::new();
+  io::stdin().read_line(&mut selections).expect("Failed to read line");
 
-  ticker::spawn();
+  println!("{}", "Bet Type: <W=Win,P=Place,S=Show>");
+  let mut bet_type = String::new();
+  io::stdin().read_line(&mut bet_type).expect("Failed to read line");
+
+  match game_input.trim() {
+    "1" => ticker::spawn_race("🐎"),
+    "2" => ticker::spawn_race("🐈"),
+    "3" => ticker::spawn_race("🐢"),
+    _ => println!("SAD! You didn't choose a race..."),
+  }
 
   // loop {
   //   println!("{}", "Choose a winning number: 1-8");
@@ -52,7 +39,7 @@ pub fn run() -> Result<(), Box<dyn Error>> {
   //   };
   // }
 
-  println!("Winner was: {}, you guessed: {}", winner, winner_input);
+  println!("You chose: {} on a {} bet", selections, bet_type);
 
   Ok(())
 }
