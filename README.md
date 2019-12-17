@@ -1,5 +1,7 @@
 # Terminal-based betting simulation game written in Rust
 
+![Screenshot of terminal UI](./race_screenshot.png)
+
 # Getting Started
 
 `cargo run` or download the relevant releases
